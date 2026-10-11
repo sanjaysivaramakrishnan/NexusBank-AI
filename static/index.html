@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NexusBank AI — Intelligent Banking Assistant</title>
+    <meta name="description" content="Multi-agent AI banking assistant powered by Gemini and LangGraph. Get help with accounts, fraud detection, and loans." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+    <div class="app-container">
+        <!-- ===== HEADER ===== -->
+        <header class="app-header" id="app-header">
+            <div class="header-left">
+                <div class="logo-container">
+                    <div class="logo-icon">
+                        <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <rect width="40" height="40" rx="10" fill="url(#logo-grad)" />
+                            <path d="M12 14h16v2H12zM12 19h16v2H12zM12 24h10v2H12z" fill="white" opacity="0.9"/>
+                            <circle cx="28" cy="25" r="5" fill="white" opacity="0.3"/>
+                            <path d="M26 25l1.5 1.5L30 23" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            <defs>
+                                <linearGradient id="logo-grad" x1="0" y1="0" x2="40" y2="40">
+                                    <stop stop-color="#00d4aa" />
+                                    <stop offset="1" stop-color="#6366f1" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+                    </div>
+                    <div class="logo-text">
+                        <h1>NexusBank AI</h1>
+                        <span class="tagline">Multi-Agent Banking Intelligence</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <div class="agent-status" id="agent-status">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">System Online</span>
+                </div>
+                <button class="btn-reset" id="btn-reset" title="New Conversation">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" />
+                        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+                    </svg>
+                </button>
+            </div>
+        </header>
+
+        <!-- ===== CHAT AREA ===== -->
+        <main class="chat-area" id="chat-area">
+            <!-- Welcome message injected by JS -->
+        </main>
+
+        <!-- ===== QUICK ACTIONS ===== -->
+        <div class="quick-actions" id="quick-actions">
+            <div class="quick-actions-label">Try asking:</div>
+            <div class="quick-actions-grid">
+                <button class="quick-btn" data-message="Show me Rajesh Kumar's account balance">
+                    <span class="quick-icon">💰</span>
+                    <span>Check Account Balance</span>
+                </button>
+                <button class="quick-btn" data-message="Show recent transactions for account ACC001">
+                    <span class="quick-icon">📋</span>
+                    <span>View Transactions</span>
+                </button>
+                <button class="quick-btn" data-message="Are there any suspicious transactions on Amit Patel's accounts?">
+                    <span class="quick-icon">🛡️</span>
+                    <span>Detect Fraud</span>
+                </button>
+                <button class="quick-btn" data-message="Is Priya Sharma eligible for a personal loan of 5 lakhs?">
+                    <span class="quick-icon">💳</span>
+                    <span>Loan Eligibility</span>
+                </button>
+                <button class="quick-btn" data-message="What is the status of loan LOAN001?">
+                    <span class="quick-icon">📊</span>
+                    <span>Loan Status</span>
+                </button>
+                <button class="quick-btn" data-message="Calculate EMI for a home loan of 50 lakhs at 8.5% for 20 years">
+                    <span class="quick-icon">🧮</span>
+                    <span>Calculate EMI</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ===== INPUT AREA ===== -->
+        <footer class="input-area" id="input-area">
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <textarea
+                        id="message-input"
+                        placeholder="Ask about accounts, transactions, loans, or fraud detection..."
+                        rows="1"
+                        maxlength="2000"
+                    ></textarea>
+                    <button class="btn-send" id="btn-send" title="Send Message">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <line x1="22" y1="2" x2="11" y2="13" />
+                            <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="powered-by">Powered by Gemini + LangGraph</span>
+                    <span class="char-count" id="char-count">0 / 2000</span>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== TYPING INDICATOR TEMPLATE ===== -->
+    <template id="typing-template">
+        <div class="message bot-message typing-indicator-msg">
+            <div class="message-avatar bot-avatar">
+                <span>🤖</span>
+            </div>
+            <div class="message-content">
+                <div class="agent-badge routing">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">Processing...</span>
+                </div>
+                <div class="typing-indicator">
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                    <div class="typing-dot"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>

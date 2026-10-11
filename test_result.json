@@ -1,0 +1,6 @@
+{
+  "session_id": "2c0da49f-372e-49bd-910a-20e73e578121",
+  "response": "Here are the account balances for **Rajesh Kumar** (Customer ID: `CUST001`):\n\n1. **Savings Account (`ACC001`)**\n   - **Balance:** ₹4,87,250.75\n   - **Status:** Active\n\n2. **Current Account (`ACC002`)**\n   - **Balance:** ₹1,25,000.00\n   - **Status:** Active\n\n**Total Combined Balance:** ₹6,12,250.75",
+  "agent": "customer_agent",
+  "routing_reasoning": "User is asking to check the account balance for customer Rajesh Kumar"
+}
